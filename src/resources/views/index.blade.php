@@ -5,27 +5,40 @@
 @endsection
 
 @section('content')
-<!-- <div class="attendance__alert">
-  // メッセージ機能
-</div> -->
 
 <div class="attendance__content">
-  <div class="attendance__content-message">xxxxさんお疲れ様です！</div>
+  <div class="attendance__content-message">{{ $user->name }}さんお疲れ様です！</div>
   <br>
-
+  @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
+  @if(session('message'))
+    <div class="alert alert-success">{{ session('message') }}</div><br>
+  @endif
     <div class="attendance__panel">
-      <table>
-        <form class="attendance__button" action="/attendances" method="post">
+        <table>
+        <tr>
+        <form class="attendance__button" action="/start" method="post">
           @csrf
-          <tr>
-          <input type="hidden" name="work_start_time" value="1111-11-11 11:11:11">
-          <button class="attendance__button-submit" type="submit" >勤務開始</button>
-          <button class="attendance__button-submit" type="submit">勤務終了</button>
-          </tr>
-          <button class="attendance__button-submit" type="submit">休憩開始</button>
-          <button class="attendance__button-submit" type="submit">休憩終了</button>
+          <td><button class="attendance__button-submit" type="submit" >勤務開始</button></td>
         </form>
+        <form class="attendance__button" action="/end" method="post">
+          @csrf
+          <td><button class="attendance__button-submit" type="submit">勤務終了</button></td>
+        </form>
+        </tr>
+        <tr>
+          <td><button class="attendance__button-submit" type="submit">休憩開始</button></td>
+          <td><button class="attendance__button-submit" type="submit">休憩終了</button></td>
+        </tr>
       </table>
+        </form>
     </div>
 
 </div>

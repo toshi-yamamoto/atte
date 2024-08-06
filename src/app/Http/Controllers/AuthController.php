@@ -6,8 +6,15 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function index ()
+    // public function index ()
+    // {
+    //     return view('index');
+    // }
+
+        public function index(Request $request)
     {
-        return view('index');
+        $user = auth()->user();
+
+        return view('index', compact('user'));
     }
 }

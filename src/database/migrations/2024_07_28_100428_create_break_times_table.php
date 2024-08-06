@@ -17,7 +17,7 @@ class CreateBreakTimesTable extends Migration
             $table->id();
             $table->dateTime('break_start_time');
             $table->dateTime('break_end_time');
-            $table->dateTime('total_break_time');
+            $table->integer('total_break_time');
             $table->timestamps();
         });
     }

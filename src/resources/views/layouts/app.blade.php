@@ -28,9 +28,9 @@
               <a class="header-nav__link" href="#">日付一覧</a>
             </li>
             <li class="header-nav__item">
-              <form class="form" action="/logout" method="post">
+              <form action="/logout" class="form" method="post">
                 @csrf
-                <button class="header-nav__button">ログアウト</button>
+              <button class="header-nav__button" href="/logout">ログアウト</button>
               </form>
             </li>
             @endif
