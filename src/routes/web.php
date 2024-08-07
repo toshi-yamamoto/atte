@@ -21,9 +21,9 @@ use App\Http\Controllers\AttendanceController;
 Route::middleware('auth')->group(function () 
     {
 
-        Route::get('/', [AuthController::class, 'index']);
-        Route::post('/start', [AttendanceController::class, 'startWork']);
-        Route::post('/end', [AttendanceController::class, 'endWork']);
+        Route::get('/', [AuthController::class, 'index'])->name('home');
+        Route::post('/start', [AttendanceController::class, 'startWork'])->name('startWork');
+        Route::post('/end', [AttendanceController::class, 'endWork'])->name('endWork');
         
     });
 
