@@ -22,9 +22,10 @@ Route::middleware('auth')->group(function ()
     {
 
         Route::get('/', [AuthController::class, 'index'])->name('home');
-        Route::post('/start', [AttendanceController::class, 'startWork'])->name('startWork');
-        Route::post('/end', [AttendanceController::class, 'endWork'])->name('endWork');
-        
+        Route::post('/startwork', [AttendanceController::class, 'startWork'])->name('startWork');
+        Route::post('/endwork', [AttendanceController::class, 'endWork'])->name('endWork');
+        Route::post('/startbreak', [AttendanceController::class, 'startBreak'])->name('startBreak');
+        Route::post('/endbreak', [AttendanceController::class, 'endBreak'])->name('endBreak');
+        Route::get('/attendances', [AttendanceController::class, 'index']);
     });
 
-// Route::post('/attendances', [AttendanceController::class, 'store']);

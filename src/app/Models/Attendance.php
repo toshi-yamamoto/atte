@@ -11,14 +11,20 @@ class Attendance extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
-    // protected $attributes = [
-    //     'attendance_date' => 1111-11-11,
-    // ];
-
     protected $fillable = [
-        'work_start_time'
+        'user_id',
+        'work_start_time',
+        'work_end_time',
+        'break_start_time',
+        'break_end_time',
+        'attendance_date',
     ];
+
+    public function breakTimes()
+    {
+        return $this->hasMany(BreakTime::class);
+    }
 }

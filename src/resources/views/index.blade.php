@@ -24,40 +24,29 @@
     <div class="attendance__panel">
         <table>
         <tr>
-        <form class="attendance__button" action="/start" method="post">
-          @csrf
-          <td><button class="attendance__button-submit" type="submit" >勤務開始</button></td>
-        </form>
-        <form class="attendance__button" action="/end" method="post">
-          @csrf
-          <td><button class="attendance__button-submit" type="submit">勤務終了</button></td>
-        </form>
+          <form class="attendance__button" action="{{ route('startWork') }}" method="post">
+            @csrf
+            <td><button class="attendance__button-submit" type="submit" >勤務開始</button></td>
+          </form>
+          <form class="attendance__button" action="{{ route('endWork') }}" method="post">
+            @csrf
+            <td><button class="attendance__button-submit" type="submit">勤務終了</button></td>
+          </form>
         </tr>
         <tr>
-          <td><button class="attendance__button-submit" type="submit">休憩開始</button></td>
-          <td><button class="attendance__button-submit" type="submit">休憩終了</button></td>
+          <form class="attendance__button" action="{{ route('startBreak') }}" method="post">
+            @csrf
+            <td><button class="attendance__button-submit" type="submit">休憩開始</button></td>
+          </form>
+          <form class="attendance__button" action="{{ route('endBreak') }}" method="post">
+            @csrf
+            <td><button class="attendance__button-submit" type="submit">休憩終了</button></td>
+          </form>
         </tr>
       </table>
-        </form>
     </div>
-
 </div>
 
-  <!-- <div class="attendance-table">
-    <table class="attendance-table__inner">
-      <tr class="attendance-table__row">
-        <th class="attendance-table__header">名前</th>
-        <th class="attendance-table__header">開始時間</th>
-        <th class="attendance-table__header">終了時間</th>
-      </tr>
-      <tr class="attendance-table__row">
-        <td class="attendance-table__item">サンプル太郎</td>
-        <td class="attendance-table__item">サンプル</td>
-        <td class="attendance-table__item">サンプル</td>
-      </tr>
-    </table>
-  </div> -->
-</div>
 <footer>
   <p>Atte, inc</p>
 </footer>
