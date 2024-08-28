@@ -29,7 +29,13 @@
               未登録
             @endif
           </td>
-          <td>休憩時間合計</td>
+          <td>
+            @if ($attendance->breakTimes->isNotEmpty())
+              {{ $attendance->total_break_time }}
+            @else
+              休憩なし
+            @endif
+          </td>
           <td>
             @if ($attendance->work_end_time)
             {{ \Carbon\Carbon::parse($attendance->work_start_time)->diff(\Carbon\Carbon::parse($attendance->work_end_time))->format('%H:%i:%s')}}

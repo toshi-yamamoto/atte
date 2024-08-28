@@ -27,4 +27,19 @@ class Attendance extends Model
     {
         return $this->hasMany(BreakTime::class);
     }
+
+    public function getTotalBreakTimeAttribute()
+    {
+        $totalBreakTime = 0;
+
+        foreach ($this->breakTimes as $breakTime) {
+            if ($breakTime->break_end_time) {
+                $start = \Carbon\Carbon::parse($breakTime->break_start_time);
+                $end = \Carbon\Carbon::parse($breakTime->break_end_time);
+                $totalBreakTime += $start->diffInSeconds($end);
+            }
+        }
+
+        return gmdate('H:i:s', $totalBreakTime);
+    }
 }
