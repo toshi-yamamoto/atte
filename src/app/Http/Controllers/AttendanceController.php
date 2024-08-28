@@ -68,9 +68,7 @@ class AttendanceController extends Controller
         $currentUserId = Auth::id();
 
         // ログインユーザーがまだ終了していない記録を取得
-        $attendance = Attendance::where('user_id', $currentUserId)
-            ->whereNull('work_end_time')
-            ->first();
+        $attendance = Attendance::where('user_id', $currentUserId)->whereNull('work_end_time')->first();
 
         if (!$attendance) {
             return redirect()->back()->withErrors('休憩開始できる記録がありません');
@@ -86,7 +84,7 @@ class AttendanceController extends Controller
 
         // 新しい休憩開始を保存
         $attendance->breakTimes()->create([
-            'break_start_time' => Carbon::now()->toTimeString(),
+            'break_start_time' => Carbon::now(),
         ]);
 
         return redirect()->back()->with('message', '休憩開始を記録しました');
