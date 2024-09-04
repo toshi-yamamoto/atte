@@ -9,6 +9,23 @@
 
 <div class="attendance__content">
 
+<div class="date-nav">
+  <a href="{{ $preDate ? route('showByDate', ['date' => $preDate]) : '#' }}" class="{{ $preDate ? '' : 'disabled' }}">
+    <button class="btn btn-outline-primary" {{ $preDate ? '' : 'disabled'}}>
+      &lt;
+    </button>
+  </a>
+</div>
+
+<span>{{ $date }}</span>
+
+<div class="date-nav">
+  <a href="{{ $nextDate ? route('showByDate', ['date' => $nextDate]) : '#' }}" class="{{ $nextDate ? '' : 'disabled' }}">
+    <button class="btn btn-outline-primary" {{ $nextDate ? '' : 'disabled'}}>
+      &gt;
+    </button>
+  </a>
+
 <table>
   <tr>
     <th>名前</th>
@@ -47,6 +64,10 @@
     @endforeach
 
 </table>
+</div>
+
+<div class="d-flex justify-content-center">
+    {{ $attendances->appends(['date' => $date])->links() }}
 </div>
 
 <footer>

@@ -7,7 +7,7 @@
 @section('content')
 
 <div class="attendance__content">
-  <div class="attendance__content-message">{{ $user->name }}さんお疲れ様です！</div>
+  <div class="attendance__content-message">{{ $currentUser->name }}さんお疲れ様です！</div>
   <br>
   @if ($errors->any())
     <div class="alert alert-danger">
@@ -26,7 +26,12 @@
         <tr>
           <form class="attendance__button" action="{{ route('startWork') }}" method="post">
             @csrf
-            <td><button class="attendance__button-submit" type="submit" >勤務開始</button></td>
+            <td>
+              <button class="attendance__button-submit" type="submit" 
+                @if ($attendance && \Carbon\Carbon::parse($attendance->attendance_date)
+                ->isSameDay(\Carbon\Carbon::now())) disabled @endif>勤務開始
+              </button>
+            </td>
           </form>
           <form class="attendance__button" action="{{ route('endWork') }}" method="post">
             @csrf

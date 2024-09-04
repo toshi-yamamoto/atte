@@ -9,12 +9,12 @@ use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
-    public function index(Request $request)
-    {
-        $attendances = Attendance::all();
+    // public function index(Request $request)
+    // {
+    //     $attendances = Attendance::all();
 
-        return view('attendances', compact('attendances'));
-    }
+    //     return view('attendances', compact('attendances'));
+    // }
 
     // 出勤時間を保存
     public function startWork(Request $request)
@@ -113,5 +113,22 @@ class AttendanceController extends Controller
         ]);
 
         return redirect()->back()->with('message', '休憩終了を記録しました');
+    }
+
+    public function showByDate(Request $request)
+    {
+        $date = $request->query('date', Attendance::max('attendance_date'));
+
+        $attendances = Attendance::whereDate('attendance_date', $date)->paginate(2);
+
+        $preDate = Attendance::where('attendance_date', '<', $date)
+            ->orderBy('attendance_date', 'desc')
+            ->value('attendance_date');
+
+        $nextDate = Attendance::where('attendance_date', '>', $date)
+            ->orderBy('attendance_date', 'asc')
+            ->value('attendance_date');
+
+        return view('attendances', compact('attendances', 'date', 'preDate', 'nextDate'));
     }
 }
