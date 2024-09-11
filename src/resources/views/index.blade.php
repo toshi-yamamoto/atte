@@ -28,24 +28,33 @@
             @csrf
             <td>
               <button class="attendance__button-submit" type="submit" 
-                @if ($attendance && \Carbon\Carbon::parse($attendance->attendance_date)
-                ->isSameDay(\Carbon\Carbon::now())) disabled @endif>勤務開始
-              </button>
+                @if ($disableStartWorkButton) disabled @endif>
+                勤務開始</button>
             </td>
           </form>
           <form class="attendance__button" action="{{ route('endWork') }}" method="post">
             @csrf
-            <td><button class="attendance__button-submit" type="submit">勤務終了</button></td>
+            <td>
+              <button class="attendance__button-submit" type="submit" 
+              @if ($disableEndWorkButton) disabled @endif>
+              勤務終了</button>
+            </td>
           </form>
         </tr>
         <tr>
           <form class="attendance__button" action="{{ route('startBreak') }}" method="post">
             @csrf
-            <td><button class="attendance__button-submit" type="submit">休憩開始</button></td>
+            <td><button class="attendance__button-submit" type="submit" 
+            @if (!$attendance || !$attendance->work_start_time || $attendance->work_end_time || 
+            ($attendance->breakTimes && $attendance->breakTimes->whereNull('break_end_time')->isNotEmpty())) disabled @endif>
+            休憩開始</button></td>
           </form>
           <form class="attendance__button" action="{{ route('endBreak') }}" method="post">
             @csrf
-            <td><button class="attendance__button-submit" type="submit">休憩終了</button></td>
+            <td><button class="attendance__button-submit" type="submit" 
+            @if (!$attendance || !$attendance->work_start_time || $attendance->work_end_time || !$attendance->breakTimes
+              ->whereNull('break_end_time')->isNotEmpty()) disabled @endif>
+              休憩終了</button></td>
           </form>
         </tr>
       </table>

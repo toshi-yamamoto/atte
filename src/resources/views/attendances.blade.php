@@ -67,7 +67,7 @@
 </div>
 
 <div class="d-flex justify-content-center">
-    {{ $attendances->appends(['date' => $date])->links() }}
+    {{ $attendances->appends(['date' => $date])->onEachSide(3)->links() }}
 </div>
 
 <footer>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,70 @@ class Attendance extends Model
         'break_end_time',
         'attendance_date',
     ];
+
+    public static function recordStartWork($currentUserId, $currentTime)
+    {
+        $ongoingAttendance = self::where('user_id', $currentUserId)->whereNull('work_end_time')->first();
+
+        // 既に勤務中の記録を取得
+        $ongoingAttendance = Attendance::where('user_id', $currentUserId)->whereNull('work_end_time')->first();
+
+        if ($ongoingAttendance) {
+            $workStartTime = Carbon::parse($ongoingAttendance->work_start_time);
+
+            // 日を跨いでいるかのチェック
+            if (!$workStartTime->isSameDay($currentTime)) {
+                // 日を跨いでいれば前日の勤務を終了
+                $ongoingAttendance->update([
+                    'work_end_time' => $workStartTime->endOfDay()
+                ]);
+                // 新しい勤務記録を作成
+                return self::create([
+                    'user_id' => $currentUserId,
+                    'work_start_time' => $currentTime,
+                    'attendance_date' => $currentTime,
+                ]);
+            } else {
+                // 同一日内であれば新しい記録は作成しない
+                return $ongoingAttendance;
+            }
+        }
+
+        return self::create([
+            'user_id' => $currentUserId,
+            'work_start_time' => $currentTime,
+            'attendance_date' => $currentTime,
+        ]);
+    }
+
+    public static function recordEndWork($currentUserId, $currentTime)
+    {
+        $attendance = self::where('user_id', $currentUserId)->whereNull('work_end_time')->first();
+
+        $attendance->update([
+            'work_end_time' => $currentTime,
+        ]);
+    }
+
+    public static function recordStartBreak($currentUserId, $currentTime)
+    {
+        $attendance = self::where('user_id', $currentUserId)->whereNull('work_end_time')->first();
+
+        $attendance->breakTimes()->create([
+            'break_start_time' => $currentTime,
+        ]);
+    }
+
+    public static function recordEndBreak($currentUserId, $currentTime)
+    {
+        $ongoingAttendance = self::where('user_id', $currentUserId)->whereNull('work_end_time')->first();
+
+        $ongoingBreak = $ongoingAttendance->breakTimes()->whereNull('break_end_time')->first();
+
+        $ongoingBreak->update([
+            'break_end_time' => $currentTime,
+        ]);
+    }
 
     public function breakTimes()
     {

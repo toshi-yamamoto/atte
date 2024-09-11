@@ -30,3 +30,7 @@ Route::middleware('auth')->group(function ()
         Route::get('/attendances', [AttendanceController::class,'showByDate'])->name('showByDate');
     });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
