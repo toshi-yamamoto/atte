@@ -24,12 +24,54 @@ class Attendance extends Model
         'attendance_date',
     ];
 
+    public function disableStartWorkButton($currentUserId)
+    {
+        $ongoingAttendance = self::where('user_id', $currentUserId->id)->whereNull('work_end_time')->first();
+
+        if ($ongoingAttendance && Carbon::parse($ongoingAttendance->attendance_date)->isSameDay(Carbon::now())){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function disableEndWorkButton($currentUserId)
+    {
+        $ongoingAttendance = self::where('user_id', $currentUserId->id)->whereNull('work_end_time')->first();
+
+        if (!$ongoingAttendance || !$ongoingAttendance->work_start_time || $ongoingAttendance->work_end_time || $ongoingAttendance->breakTimes->whereNull('break_end_time')->isNotEmpty()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function disableStartBreakButton($currentUserId)
+    {
+        $ongoingAttendance = self::where('user_id', $currentUserId->id)->whereNull('work_end_time')->first();
+
+        if (!$ongoingAttendance || !$ongoingAttendance->work_start_time || $ongoingAttendance->work_end_time || 
+            ($ongoingAttendance->breakTimes && $ongoingAttendance->breakTimes->whereNull('break_end_time')->isNotEmpty())) {
+                return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function disableEndBreakButton($currentUserId)
+    {
+        $ongoingAttendance = self::where('user_id', $currentUserId->id)->whereNull('work_end_time')->first();
+
+        if (!$ongoingAttendance || !$ongoingAttendance->work_start_time || $ongoingAttendance->work_end_time || !$ongoingAttendance->breakTimes->whereNull('break_end_time')->isNotEmpty()) {
+                return true;
+            }
+            return false;
+    }
+
     public static function recordStartWork($currentUserId, $currentTime)
     {
-        $ongoingAttendance = self::where('user_id', $currentUserId)->whereNull('work_end_time')->first();
-
         // 既に勤務中の記録を取得
-        $ongoingAttendance = Attendance::where('user_id', $currentUserId)->whereNull('work_end_time')->first();
+        $ongoingAttendance = self::where('user_id', $currentUserId)->whereNull('work_end_time')->first();
 
         if ($ongoingAttendance) {
             $workStartTime = Carbon::parse($ongoingAttendance->work_start_time);
@@ -61,18 +103,18 @@ class Attendance extends Model
 
     public static function recordEndWork($currentUserId, $currentTime)
     {
-        $attendance = self::where('user_id', $currentUserId)->whereNull('work_end_time')->first();
+        $ongoingAttendance = self::where('user_id', $currentUserId)->whereNull('work_end_time')->first();
 
-        $attendance->update([
+        $ongoingAttendance->update([
             'work_end_time' => $currentTime,
         ]);
     }
 
     public static function recordStartBreak($currentUserId, $currentTime)
     {
-        $attendance = self::where('user_id', $currentUserId)->whereNull('work_end_time')->first();
+        $ongoingAttendance = self::where('user_id', $currentUserId)->whereNull('work_end_time')->first();
 
-        $attendance->breakTimes()->create([
+        $ongoingAttendance->breakTimes()->create([
             'break_start_time' => $currentTime,
         ]);
     }
@@ -99,8 +141,8 @@ class Attendance extends Model
 
         foreach ($this->breakTimes as $breakTime) {
             if ($breakTime->break_end_time) {
-                $start = \Carbon\Carbon::parse($breakTime->break_start_time);
-                $end = \Carbon\Carbon::parse($breakTime->break_end_time);
+                $start = Carbon::parse($breakTime->break_start_time);
+                $end = Carbon::parse($breakTime->break_end_time);
                 $totalBreakTime += $start->diffInSeconds($end);
             }
         }

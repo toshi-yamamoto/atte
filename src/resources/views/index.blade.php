@@ -7,7 +7,7 @@
 @section('content')
 
 <div class="attendance__content">
-  <div class="attendance__content-message">{{ $currentUser->name }}さんお疲れ様です！</div>
+  <div class="attendance__content-message">{{ $currentUserId->name }}さんお疲れ様です！</div>
   <br>
   @if ($errors->any())
     <div class="alert alert-danger">
@@ -45,15 +45,13 @@
           <form class="attendance__button" action="{{ route('startBreak') }}" method="post">
             @csrf
             <td><button class="attendance__button-submit" type="submit" 
-            @if (!$attendance || !$attendance->work_start_time || $attendance->work_end_time || 
-            ($attendance->breakTimes && $attendance->breakTimes->whereNull('break_end_time')->isNotEmpty())) disabled @endif>
+            @if ($disableStartBreakButton) disabled @endif>
             休憩開始</button></td>
           </form>
           <form class="attendance__button" action="{{ route('endBreak') }}" method="post">
             @csrf
             <td><button class="attendance__button-submit" type="submit" 
-            @if (!$attendance || !$attendance->work_start_time || $attendance->work_end_time || !$attendance->breakTimes
-              ->whereNull('break_end_time')->isNotEmpty()) disabled @endif>
+            @if ($disableEndBreakButton) disabled @endif>
               休憩終了</button></td>
           </form>
         </tr>

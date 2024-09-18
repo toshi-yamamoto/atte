@@ -8,23 +8,18 @@ use Illuminate\Http\Request;
 use App\Models\Attendance;
 class AuthController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $currentUser = Auth::user();
-        $currentTime = Carbon::now();
+        $currentUserId = Auth::user();
 
-        $attendance = Attendance::where('user_id', $currentUser->id)->whereNull('work_end_time')->first();
+        $disableStartWorkButton = Attendance::disableStartWorkButton($currentUserId);
 
-        $disableStartWorkButton = false;
-        if ($attendance && Carbon::parse($attendance->attendance_date)->isSameDay(Carbon::now())){
-            $disableStartWorkButton = true;
-        }
+        $disableEndWorkButton = Attendance::disableEndWorkButton($currentUserId);
 
-        $disableEndWorkButton = false;
-        if (!$attendance || !$attendance->work_start_time || $attendance->work_end_time || $attendance->breakTimes->whereNull('break_end_time')->isNotEmpty()){
-            $disableEndWorkButton = true;
-        }
+        $disableStartBreakButton = Attendance::disableStartBreakButton($currentUserId);
 
-        return view('index', compact('currentUser', 'attendance', 'disableStartWorkButton', 'disableEndWorkButton'));
+        $disableEndBreakButton = Attendance::disableEndBreakButton($currentUserId);
+
+        return view('index', compact('currentUserId', 'disableStartWorkButton', 'disableEndWorkButton', 'disableStartBreakButton', 'disableEndBreakButton'));
     }
 }

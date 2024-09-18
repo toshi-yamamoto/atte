@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function ()
         Route::post('/endwork', [AttendanceController::class, 'endWork'])->name('endWork');
         Route::post('/startbreak', [AttendanceController::class, 'startBreak'])->name('startBreak');
         Route::post('/endbreak', [AttendanceController::class, 'endBreak'])->name('endBreak');
-        Route::get('/attendances', [AttendanceController::class, 'index']);
+        // Route::get('/attendances', [AttendanceController::class, 'index']);
         Route::get('/attendances', [AttendanceController::class,'showByDate'])->name('showByDate');
     });
 
