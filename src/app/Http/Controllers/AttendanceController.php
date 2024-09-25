@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Attendance;
 use Carbon\Carbon;
 
+
 class AttendanceController extends Controller
 {
     // 出勤時間を打刻

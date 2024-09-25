@@ -2,39 +2,31 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+<script src="{{ asset('js/app.js') }}"></script>
 @endsection
 
 @section('content')
 
-
-<div class="attendance__content">
-
-<div class="date-nav">
+<div class="container text-center">
   <a href="{{ $preDate ? route('showByDate', ['date' => $preDate]) : '#' }}" class="{{ $preDate ? '' : 'disabled' }}">
-    <button class="btn btn-outline-primary" {{ $preDate ? '' : 'disabled'}}>
-      &lt;
-    </button>
+    <button class="btn btn-outline-primary" {{ $preDate ? '' : 'disabled'}}>&lt;</button>
   </a>
-</div>
-
 <span>{{ $date }}</span>
-
-<div class="date-nav">
   <a href="{{ $nextDate ? route('showByDate', ['date' => $nextDate]) : '#' }}" class="{{ $nextDate ? '' : 'disabled' }}">
-    <button class="btn btn-outline-primary" {{ $nextDate ? '' : 'disabled'}}>
-      &gt;
-    </button>
+    <button class="btn btn-outline-primary" {{ $nextDate ? '' : 'disabled'}}>&gt;</button>
   </a>
 
-<table>
+<table class="table">
+  <thead>
   <tr>
-    <th>名前</th>
-    <th>勤務開始</th>
-    <th>勤務終了</th>
-    <th>休憩時間</th>
-    <th>勤務時間</th>
+    <th scope="col">名前</th>
+    <th scope="col">勤務開始</th>
+    <th scope="col">勤務終了</th>
+    <th scope="col">休憩時間</th>
+    <th scope="col">勤務時間</th>
   </tr>
-
+</thead>
     @foreach ($attendances as $attendance)
       <tr>
           <td>{{ $attendance->user->name }}</td>
@@ -64,15 +56,14 @@
     @endforeach
 
 </table>
-</div>
 
 <div class="d-flex justify-content-center">
-    {{ $attendances->appends(['date' => $date])->onEachSide(3)->links() }}
+    {{ $attendances->appends(['date' => $date])->onEachSide(3)->links('vendor.pagination.bootstrap-4') }}
 </div>
 
-<footer>
-  <p>Atte, inc</p>
+<footer class="footer">
+    <p>Atte, inc</p>
 </footer>
-
+</div>
 @endsection
 </html>

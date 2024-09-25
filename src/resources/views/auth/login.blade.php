@@ -1,73 +1,61 @@
 @extends('layouts.app')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+<script src="{{ asset('js/app.js') }}"></script>
+@endsection
+
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<main>
+<div class="login__content">
+  <div class="login-form__heading">
+    <h2>ログイン</h2>
+  </div>
+  <form class="form" action="/login" method="post">
+    @csrf
+    <div class="form__group">
+      <div class="form__group-title">
+        <!-- <span class="form__label--item">メールアドレス</span> -->
+      </div>
+      <div class="form__group-content">
+        <div class="form__input--text">
+          <input type="email" name="email" value="{{ old('email') }}" placeholder="メールアドレス"/>
         </div>
+        <div class="form__error">
+          @error('email')
+          {{ $message }}
+          @enderror
+        </div>
+      </div>
     </div>
+    <div class="form__group">
+      <div class="form__group-title">
+        <!-- <span class="form__label--item">パスワード</span> -->
+      </div>
+      <div class="form__group-content">
+        <div class="form__input--text">
+          <input type="password" name="password" placeholder="パスワード"/>
+        </div>
+        <div class="form__error">
+          @error('password')
+          {{ $message }}
+          @enderror
+        </div>
+      </div>
+    </div>
+    <div class="form__button">
+      <button class="form__button-submit" type="submit">ログイン</button>
+    </div>
+  </form>
+  <div class="register__link">
+    <p>アカウントをお持ちではない方はこちらから</p>
+    <a class="register__button-submit" href="/register">会員登録</a>
+  </div>
 </div>
+</main>
+<footer>
+  <p>Atte, inc</p>
+</footer>
 @endsection
