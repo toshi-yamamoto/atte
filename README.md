@@ -79,4 +79,4 @@ cd attendance-system
 
 - 勤務開始、終了のボタンは状態に応じて無効化されます。コントローラ内でこれらの判定を行っています。
 - Bladeテンプレートを利用して、フロントエンドとバックエンドの連携が効率化されています。
-- 休憩時間の計算は Attendance モデル内で処理し、getTotalBreakTimeAttribute というアクセサを通じて合計休憩時間を表
+- 休憩時間の計算は Attendance モデル内で処理し、getTotalBreakTimeAttribute というアクセサを通じて合計休憩時間を表示
