@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AttendanceController;
@@ -18,19 +19,18 @@ use App\Http\Controllers\AttendanceController;
 
 // Route::get('/', [AuthController::class, 'index']);
 
-Route::middleware('auth')->group(function () 
+Route::middleware('auth')->group(function ()
     {
-
         Route::get('/', [AuthController::class, 'index'])->name('home');
         Route::post('/startwork', [AttendanceController::class, 'startWork'])->name('startWork');
         Route::post('/endwork', [AttendanceController::class, 'endWork'])->name('endWork');
         Route::post('/startbreak', [AttendanceController::class, 'startBreak'])->name('startBreak');
         Route::post('/endbreak', [AttendanceController::class, 'endBreak'])->name('endBreak');
-        // Route::get('/attendances', [AttendanceController::class, 'index']);
         Route::get('/attendances', [AttendanceController::class,'showByDate'])->name('showByDate');
+        Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     });
 
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

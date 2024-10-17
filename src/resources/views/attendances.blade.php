@@ -1,23 +1,23 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 <script src="{{ asset('js/app.js') }}"></script>
 @endsection
 
 @section('content')
 
-<div class="container text-center">
+<div class="container-fluid text-center">
   <a href="{{ $preDate ? route('showByDate', ['date' => $preDate]) : '#' }}" class="{{ $preDate ? '' : 'disabled' }}">
-    <button class="btn btn-outline-primary" {{ $preDate ? '' : 'disabled'}}>&lt;</button>
+    <button class="btn btn-outline-primary btn-light" {{ $preDate ? '' : 'disabled'}}>&lt;</button>
   </a>
-<span>{{ $date }}</span>
+<span>{{ $date }}</span><span> </span>
   <a href="{{ $nextDate ? route('showByDate', ['date' => $nextDate]) : '#' }}" class="{{ $nextDate ? '' : 'disabled' }}">
-    <button class="btn btn-outline-primary" {{ $nextDate ? '' : 'disabled'}}>&gt;</button>
+    <button class="btn btn-outline-primary btn-light" {{ $nextDate ? '' : 'disabled'}}>&gt;</button>
   </a>
-
-<table class="table">
+<br><br><br>
+<table class="table table-striped table-hover attendance-table">
   <thead>
   <tr>
     <th scope="col">名前</th>
@@ -56,14 +56,15 @@
     @endforeach
 
 </table>
-
+<br><br>
 <div class="d-flex justify-content-center">
     {{ $attendances->appends(['date' => $date])->onEachSide(3)->links('vendor.pagination.bootstrap-4') }}
 </div>
 
-<footer class="footer">
-    <p>Atte, inc</p>
-</footer>
 </div>
+
+  <div class="footer">
+    <p>Atte, inc.</p>
+  </div>
+
 @endsection
-</html>

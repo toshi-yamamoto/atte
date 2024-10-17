@@ -1,0 +1,52 @@
+.container-fluid {
+  background-color: lightgray;
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.navbar {
+  background-color: white !important;
+}
+
+.navbar-brand {
+  font-size: 2rem !important;
+  margin-left: 80px;
+}
+
+.navbar-nav {
+  margin-right: 80px;
+}
+
+.attendance-table {
+  background-color: lightgrey !important;
+}
+
+.custom-button {
+  height: 150px;
+  border-radius: 0px !important;
+  background-color: white !important;
+  color: black !important;
+  border: none !important;
+}
+
+span {
+  padding-left: 10px;
+}
+
+.custom-button:disabled {
+  color: lightgray !important;
+}
+
+.attendance-table {
+  padding-top: 50px !important;
+}
+
+.footer {
+  position: relative;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white !important;
+  text-align: center;
+}

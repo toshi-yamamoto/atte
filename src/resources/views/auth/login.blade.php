@@ -1,14 +1,13 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/login.css') }}">
-<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 <script src="{{ asset('js/app.js') }}"></script>
 @endsection
 
 @section('content')
-<main>
+<main?>
 <div class="login__content">
   <div class="login-form__heading">
     <h2>ログイン</h2>
@@ -55,7 +54,9 @@
   </div>
 </div>
 </main>
-<footer>
-  <p>Atte, inc</p>
-</footer>
+
+  <div class="footer">
+    <p>Atte, inc.</p>
+  </div>
+
 @endsection

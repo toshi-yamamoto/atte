@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/register.css') }}">
-<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 <script src="{{ asset('js/app.js') }}"></script>
 @endsection
@@ -80,7 +79,9 @@
   </div>
 </div>
 </main>
-<footer>
-  <p>Atte, inc</p>
+
+<footer class="footer">
+  <p>Atte, inc.</p>
 </footer>
+
 @endsection

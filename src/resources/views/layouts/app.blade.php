@@ -7,31 +7,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atte</title>
   <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
-  <link rel="stylesheet" href="{{ asset('css/common.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <script src="{{ asset('js/app.js') }}"></script>
   @yield('css')
 </head>
 
 <body>
-  <header class="header">
-    <nav class="navbar navbar-expand-lg" style="background-color: #fffff">
-        <span class="navbar-brand h1">Atte</span>
+  <header>
+    <nav class="navbar navbar-expand-lg">
+        <span class="navbar-brand">Atte</span>
           <ul class="navbar-nav ms-auto">
             @if (Auth::check())
-            <li class="nav-item active">
-              <a class="nav-link" href="/login">ホーム</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">日付一覧</a>
-            </li>
-            <li class="nav-item active">
-              <form class="form" action="/logout" method="post">
-                @csrf
-                <button type="button" class="btn btn-link text-decoration-none">ログアウト</button>
-              </form>
-            </li>
-            @endif
+        <li class="nav-item active">
+          <a class="nav-link" href="/login">ホーム</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">日付一覧</a>
+        </li>
+        <li class="nav-item active">
+          <form class="form" action="{{ route('logout') }}" method="post">
+          @csrf
+          <button type="submit" class="btn btn-link text-decoration-none">ログアウト</button>
+          </form>
+        </li>
+      @endif
           </ul>
         </nav>
       </div>
